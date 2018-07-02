@@ -5,15 +5,15 @@ const TaskForm = (props) => {
     <div className="form">
       <h3>Add New Task</h3>
 
-      <form onSubmit={props.handleSubmit }>
+      <form>
         <span id="error">{ props.submissionError }</span>
         <label htmlFor="description">Description</label>
         <input
           type="text"
           id="description"
           name="description"
-          value={props.taskDescription}
-          onChange={props.handleDescriptionChange}
+          value=
+          onChange=
         />
         <input
           type="submit"
