@@ -1,4 +1,10 @@
 /* your styles, here */
+.app {
+  border: solid 2px orange;
+  margin: 10px;
+  padding: 15px;
+}
+
 .list {
   border: solid 2px blue;
   margin: 10px;
