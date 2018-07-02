@@ -1,19 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react'
 import TaskListItem from './task_list_item'
 
 const TaskList = (props) => {
-  const taskListItems = props.tasks.map((task) => {
-    return( 
-    <TaskListItem 
-      key={task.id}
-      task={task} 
+
+  let taskListItems = props.tasks.map(task => {
+    return(
+      <TaskListItem
+        key={task.id}
+        task={task}
       />
     )
   })
+
   return (
-    <ul>
-      { taskListItems }
-    </ul>
+    <div className={props.className}>
+      <h1>Task List App</h1>
+      <ul>
+        { taskListItems }
+      </ul>
+    </div>
   )
 }
 

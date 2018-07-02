@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const TaskForm = (props) => {
   return (
-    <div>
-      <h1>New Task</h1>
+    <div className="form">
+      <h3>Add New Task</h3>
       <form onSubmit={props.handleSubmit }>
         <span id="error">{ props.submissionError }</span>
         <label htmlFor="description">Description</label>

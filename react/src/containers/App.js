@@ -55,13 +55,20 @@ class App extends Component {
     })
   }
   render() {
+    let className="list"
+
     return (
       <div>
-        <TaskList tasks={this.state.tasks } />
-        <TaskForm taskDescription={this.state.taskDescription }
+        <TaskList
+          className={className}
+          tasks={this.state.tasks }
+        />
+        <TaskForm
+          taskDescription={this.state.taskDescription }
           submissionError={ this.state.submissionError }
           handleSubmit={ this.handleSubmit }
-          handleDescriptionChange={ this.handleDescriptionChange } />
+          handleDescriptionChange={ this.handleDescriptionChange }
+        />
       </div>
     )
   }

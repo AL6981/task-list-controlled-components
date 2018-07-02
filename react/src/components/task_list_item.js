@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 const TaskListItem = (props) => {
   return (
-    <li>{props.task.description}</li>
+    <li className="item">{props.task.description}</li>
   )
 }
 
