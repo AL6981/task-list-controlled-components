@@ -19,6 +19,7 @@ def write_to_json_file(task)
   new_tasks = { tasks: tasks["tasks"].concat([new_task]) }
   json_tasks = JSON.pretty_generate(new_tasks, indent: '  ')
   File.write("tasks.json", json_tasks)
+  return new_task
 end
 
 get "/api/v1/tasks" do
@@ -30,8 +31,9 @@ end
 post "/api/v1/tasks" do
   json = JSON.parse(request.body.read)
   if json["task"]
-    write_to_json_file(json["task"])
+    new_task = write_to_json_file(json["task"])
     status 200
+    new_task.to_json
   else
     status 500
     { error: "Oops, something bad happened yo" }.to_json

@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
-import TaskList from '../components/task_list'
-import TaskForm from '../components/task_form';
+import TaskList from '../components/TaskList'
+import TaskForm from '../components/TaskForm';
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      tasks: []
+      tasks: [],
+      taskDescription: '',
+      submissionError: ''
     }
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount(){
-    let that = this
     fetch('/api/v1/tasks')
       .then(response => {
         return response.json()
       })
-      .then(json => {
-        if(json.tasks){
-          this.setState({
-            tasks: json.tasks
-          })
-        }
+      .then((json) => {
+        this.setState({
+          tasks: json.tasks
+        })
+        console.log(this.state.tasks)
       })
     this.setState({
       taskDescription: '',
@@ -31,43 +31,52 @@ class App extends Component {
     })
   }
 
-  handleSubmit(e) {
-    e.preventDefault()
+  handleSubmit(event) {
+    event.preventDefault()
     if(!this.state.taskDescription) {
       this.setState({
         submissionError: 'Please specify a description'
       })
     }
     else {
-      fetch('/api/v1/tasks', { method: 'post', body:
-        JSON.stringify({task: {description: this.state.taskDescription}})})
-      this.setState({
-        submissionError: '',
-        taskDescription: ''
+      fetch('/api/v1/tasks', {
+        method: 'post',
+        body: JSON.stringify({task: {description: this.state.taskDescription}})
+      })
+      .then(response => response.json())
+      .then(body => {
+        this.setState({
+          tasks: this.state.tasks.concat(body),
+          submissionError: '',
+          taskDescription: ''
+        })
       })
     }
   }
 
-  handleDescriptionChange(e) {
-    e.preventDefault()
+  handleDescriptionChange(event) {
+    event.preventDefault()
     this.setState({
-      taskDescription: e.target.value
+      taskDescription: event.target.value
     })
   }
-  render() {
-    let className="list"
 
+
+  render() {
+    console.log(this.state.taskDescription)
     return (
       <div>
-        <TaskList
-          className={className}
-          tasks={this.state.tasks }
-        />
+        <div className="list">
+        <h1>Task List App</h1> 
+          <TaskList
+            tasks={this.state.tasks}
+          />
+        </div>
         <TaskForm
-          taskDescription={this.state.taskDescription }
-          submissionError={ this.state.submissionError }
-          handleSubmit={ this.handleSubmit }
-          handleDescriptionChange={ this.handleDescriptionChange }
+          taskDescription={this.state.taskDescription}
+          submissionError={this.state.submissionError}
+          handleSubmit={this.handleSubmit}
+          handleDescriptionChange={this.handleDescriptionChange}
         />
       </div>
     )
